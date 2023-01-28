@@ -1,0 +1,10 @@
+{
+    "urls": [
+        [
+            "segclock.py",
+            "github:hakierspejs/micropython-segclock/segclock.py"
+        ]
+    ],
+    "deps": [],
+    "version": "0.1.0"
+}
