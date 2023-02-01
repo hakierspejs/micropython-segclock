@@ -1,3 +1,6 @@
+ifeq (,$(wildcard /dev/tty.usbmodem101))
+	PORT=/dev/tty.usbmodem1101
+endif
 PORT=/dev/tty.usbmodem101
 
 shell:
@@ -12,11 +15,9 @@ deploy:
 run: deploy
 	mpremote connect $(PORT) run example.py
 
-install_unittest:
-	mpremote connect $(PORT) mip install traceback
-	wget https://raw.githubusercontent.com/cb4b1fd915/micropython-lib/master/python-stdlib/unittest/unittest/__init__.py -O /tmp/unittest.py
-	mpremote connect $(PORT) fs cp /tmp/unittest.py :/lib/unittest.py
-	rm /tmp/unittest.py
-
-test: install_unittest deploy
+REQUIREMENTS_INFO := $(shell mpremote connect $(PORT) fs ls ./lib/unittest/ | grep __init__.mpy > /dev/null; echo $$?)
+test:
+ifneq ($(REQUIREMENTS_INFO),0)
+	mpremote connect $(PORT) mip install unittest
+endif
 	mpremote connect $(PORT) run test.py

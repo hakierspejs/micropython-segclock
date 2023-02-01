@@ -204,8 +204,8 @@ class Clock:
                 y = int(self.scale_y * y1) + self.offset_y
                 self.fbuf.rect(x, y, w, h, color, True)
 
-    def draw(self, hour, minute):
-        current_state = (hour // 10, hour % 10, 1, minute // 10, minute % 10)
+    def draw(self, hour, minute, colon=True):
+        current_state = (hour // 10, hour % 10, colon, minute // 10, minute % 10)
 
         if self._state[0] != current_state[0]:
             self._draw_digit(DIGITS[8], self.position_0, self.back_color)
@@ -217,7 +217,8 @@ class Clock:
 
         if self._state[2] != current_state[2]:
             self._draw_digit(COLON, self.position_2, self.back_color)
-            self._draw_digit(COLON, self.position_2, self.font_color)
+            if colon:
+                self._draw_digit(COLON, self.position_2, self.font_color)
 
         if self._state[3] != current_state[3]:
             self._draw_digit(DIGITS[8], self.position_3, self.back_color)
