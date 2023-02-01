@@ -2,7 +2,7 @@
 
 This library allows you to draw 7-segment digits clock on the given FrameBuffer.
 
-Example:
+Example of usage:
 ```python
 
 from your_display_driver import Display
@@ -23,3 +23,4 @@ def main():
 
 ```
 
+Simple kitchen timer based on this library: https://github.com/hakierspejs/pico-ktimer
